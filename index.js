@@ -2,9 +2,9 @@ const http = require('http');
 const https = require('https');
 
 const PORT = process.env.PORT || 3000;
+const API_KEY = process.env.GEMINI_API_KEY;
 
 const server = http.createServer((req, res) => {
- // CORS headers
  res.setHeader('Access-Control-Allow-Origin', '*');
  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -17,7 +17,6 @@ const server = http.createServer((req, res) => {
 
  const url = new URL(req.url, `http://localhost:${PORT}`);
  
- // 只代理 /v1beta/ 开头的请求
  if (!url.pathname.startsWith('/v1beta/')) {
  res.writeHead(404, { 'Content-Type': 'application/json' });
  res.end(JSON.stringify({ error: 'Not found' }));
@@ -30,7 +29,7 @@ const server = http.createServer((req, res) => {
  method: req.method,
  headers: {
  'Content-Type': 'application/json',
- 'x-goog-api-key': 'AIzaSyAOcAYb9_hjaxlnamJzRlamhOj8an7Xw8w'
+ 'x-goog-api-key': API_KEY
  }
  };
 
